@@ -1,0 +1,157 @@
+.json-viewer {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.json-container {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    font-family: 'Fira Code', 'Monaco', 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+/* Custom Scrollbar */
+.json-container::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.json-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.json-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.json-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* JSON Elements */
+.json-object,
+.json-array {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.json-content {
+    padding-left: 1.5rem;
+    border-left: 2px solid rgba(102, 126, 234, 0.3);
+    margin-left: 0.5rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+}
+
+.json-item {
+    margin: 0.2rem 0;
+}
+
+.json-bracket {
+    color: #667eea;
+    font-weight: bold;
+    user-select: none;
+}
+
+.json-bracket.clickable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.json-bracket.clickable:hover {
+    color: #8ba3ff;
+    text-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+}
+
+.collapse-indicator {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    margin-left: 0.3rem;
+}
+
+.json-key {
+    color: #11998e;
+    font-weight: 500;
+}
+
+.json-colon {
+    color: var(--text-secondary);
+}
+
+.json-comma {
+    color: var(--text-secondary);
+}
+
+.json-string {
+    color: #f5576c;
+}
+
+.json-number {
+    color: #38ef7d;
+}
+
+.json-boolean {
+    color: #f093fb;
+    font-weight: 600;
+}
+
+.json-null {
+    color: #a8b2d1;
+    font-style: italic;
+}
+
+.json-undefined {
+    color: #a8b2d1;
+    font-style: italic;
+    opacity: 0.6;
+}
+
+.json-empty {
+    color: var(--text-secondary);
+    font-style: italic;
+    font-size: 0.85rem;
+    margin-left: 0.5rem;
+}
+
+.json-index {
+    color: #a8b2d1;
+    margin-right: 0.5rem;
+    font-size: 0.85rem;
+}
+
+/* Animations */
+.json-item {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .json-container {
+        font-size: 0.8rem;
+        padding: 1rem;
+    }
+
+    .json-content {
+        padding-left: 1rem;
+    }
+}

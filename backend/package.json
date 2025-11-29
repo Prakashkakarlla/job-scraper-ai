@@ -1,0 +1,29 @@
+{
+  "name": "job-scraper-backend",
+  "version": "1.0.0",
+  "description": "Backend service for scraping job posting details using AI",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "job",
+    "scraper",
+    "ai",
+    "gemini"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@sparticuz/chromium": "^141.0.0",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "puppeteer": "^24.31.0",
+    "puppeteer-core": "^24.31.0"
+  }
+}
