@@ -16,9 +16,19 @@ export async function scrapeJobUrl(url) {
         // Determine if running in production (Vercel) or local
         const isProduction = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
 
-        // Launch browser with optimized settings
+        console.log(`Environment: ${isProduction ? 'Production (Vercel)' : 'Local'}`);
+
+        // Launch browser with optimized settings and timeout
+        const launchTimeout = setTimeout(() => {
+            throw new Error('Browser launch timeout - Puppeteer took too long to start');
+        }, 10000); // 10 second timeout for browser launch
+
         browser = await puppeteer.launch({
-            args: isProduction ? chromium.args : [
+            args: isProduction ? [
+                ...chromium.args,
+                '--single-process',
+                '--no-zygote'
+            ] : [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-dev-shm-usage',
@@ -28,8 +38,12 @@ export async function scrapeJobUrl(url) {
             executablePath: isProduction
                 ? await chromium.executablePath()
                 : process.env.CHROME_PATH || undefined,
-            headless: chromium.headless || 'new'
+            headless: chromium.headless || 'new',
+            timeout: 10000
         });
+
+        clearTimeout(launchTimeout);
+        console.log('✅ Browser launched successfully');
 
         const page = await browser.newPage();
 
@@ -41,14 +55,16 @@ export async function scrapeJobUrl(url) {
         // Set viewport
         await page.setViewport({ width: 1920, height: 1080 });
 
-        // Navigate to the URL with timeout
+        // Navigate to the URL with reduced timeout for Vercel
+        console.log('📄 Navigating to page...');
         await page.goto(url, {
-            waitUntil: 'networkidle2',
-            timeout: 30000
+            waitUntil: 'domcontentloaded', // Faster than networkidle2
+            timeout: 15000 // Reduced from 30s to 15s
         });
+        console.log('✅ Page loaded');
 
-        // Wait a bit for dynamic content to load
-        await new Promise(r => setTimeout(r, 2000));
+        // Wait for dynamic content (reduced for Vercel)
+        await new Promise(r => setTimeout(r, 1000)); // Reduced from 2s to 1s
 
         // Get the page content
         const html = await page.content();
