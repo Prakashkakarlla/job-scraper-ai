@@ -2,7 +2,7 @@ import { useState } from 'react';
 import JobEditor from './components/JobEditor';
 import './App.css';
 
-const API_URL = 'http://localhost:3001/api/scrape';
+const API_URL = import.meta.env.VITE_API_URL || 'https://job-scraper-ai-8xgy.vercel.app/api/scrape';
 
 function App() {
     const [url, setUrl] = useState('');
